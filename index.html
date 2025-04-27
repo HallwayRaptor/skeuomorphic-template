@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --button-bevel-width: 3px;
+    --button-highlight-color: rgba(255, 250, 245, 0.5);
+    --button-shadow-color: rgba(5, 0, 10, 0.4);
+
+    --button-gloss-opacity: 0.18;
+    --button-sharp-highlight-opacity: 0.35;
+    --button-sharp-shadow-opacity: 0.15;
+
+    --holder-bevel-width: 3px;
+    --holder-inset-color: rgb(10,5,15);
+    --holder-highlight-color: rgba(255, 250, 245, 0.5);
+    --holder-shadow-color: rgba(5, 0, 10, 0.4);
+    --holder-base-color: #707277;
+
+    --button-base-color: #8d2c2c;
+    --button-gradient-stop-1: rgba(255, 255, 255, 0.1);
+    --button-gradient-stop-2: rgba(0, 0, 0, 0.1);
+
+    --noise-svg-button: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.3"/></svg>');
+    --noise-svg-holder-surface: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="3" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.4"/></svg>');
+    --holder-inset-gradient: linear-gradient(rgba(255,255,255,0.03), rgba(0,0,0,0.06));
+
+    --body-bg-color: #252528;
+    --noise-svg-body-fine: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="10" numOctaves="1" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.05"/></svg>');
+
+  --panel-padding: 20px;
+  --panel-border-radius: 4px;
+  --panel-bg-color: #2d2f33;
+  --panel-text-color: #e0e0e0;
+  --panel-bevel-width: 2px;
+  --panel-shadow-color: #4d4d4d;
+  --panel-highlight-color: #909297;
+  --panel-inner-shadow-color: rgba(0, 0, 0, 0.5);
+  --noise-svg-panel: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(%23noise)" opacity="0.08"/></svg>');
+  --panel-gradient: linear-gradient(rgba(255,255,255,0.02), rgba(0,0,0,0.03));
+}
+
+
+  body {
+    background-color: var(--body-bg-color);
+    background-image: var(--noise-svg-body-fine);
+    background-blend-mode: soft-light;
+    background-size: auto;
+    min-height: 100vh;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    align-items: center;
+  }
+
+  .button-holder {
+    position: relative;
+    width: 200px;
+    height: 75px;
+    border-top: var(--holder-bevel-width) solid var(--holder-highlight-color);
+    border-left: var(--holder-bevel-width) solid var(--holder-highlight-color);
+    border-bottom: var(--holder-bevel-width) solid var(--holder-shadow-color);
+    border-right: var(--holder-bevel-width) solid var(--holder-shadow-color);
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--holder-base-color);
+    background-image:
+      var(--noise-svg-holder-surface),
+      linear-gradient(rgba(255,255,255,0.08), rgba(0,0,0,0.08));
+    background-size: auto, 100% 100%;
+    background-blend-mode: overlay, normal;
+    background-position: 0 0;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3),
+                inset 0 0 0 var(--holder-bevel-width) transparent;
+
+  }
+
+  .button-holder::before {
+    content: "";
+    position: absolute;
+    top: var(--holder-bevel-width);
+    left: var(--holder-bevel-width);
+    right: var(--holder-bevel-width);
+    bottom: var(--holder-bevel-width);
+    z-index: 0;
+    background-color: var(--holder-inset-color);
+    background-image: var(--holder-inset-gradient);
+    background-size: 100% 100%;
+    box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.6),
+                inset -1px -1px 1px rgba(255, 255, 255, 0.05);
+  }
+
+  .button-1 {
+    padding: 0;
+    outline: none;
+    width: calc(100% - 10px);
+    height: calc(100% - 10px);
+    color: #ffffff;
+    font-size: 16px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    border-top: var(--button-bevel-width) solid var(--button-highlight-color);
+    border-left: var(--button-bevel-width) solid var(--button-highlight-color);
+    border-bottom: var(--button-bevel-width) solid var(--button-shadow-color);
+    border-right: var(--button-bevel-width) solid var(--button-shadow-color);
+    box-sizing: border-box;
+    position: relative;
+    z-index: 1;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    background-image:
+      linear-gradient(to bottom, rgba(255, 255, 255, var(--button-gloss-opacity)) 0%, rgba(255, 255, 255, 0) 60%),
+      var(--noise-svg-button),
+      linear-gradient(to bottom, var(--button-gradient-stop-1), var(--button-gradient-stop-2));
+    background-color: var(--button-base-color);
+    background-size: 100% 100%, auto, 100% 100%;
+    background-blend-mode: soft-light, soft-light, multiply;
+    background-position: 0 0, 0 0, 0 0;
+    box-shadow:
+        inset 1px 1px 0px 0px rgba(255, 255, 255, var(--button-sharp-highlight-opacity)),
+        inset -1px -1px 0px 0px rgba(0, 0, 0, var(--button-sharp-shadow-opacity)),
+        inset 1px 1px 1px rgba(255, 255, 255, 0.1),
+        inset -1px -1px 1px rgba(0, 0, 0, 0.1);
+        transition:
+      filter 0.1s ease-out,
+      box-shadow 0.1s ease-out,
+      border-color 0.05s ease-out,
+      transform 0.05s ease-out;
+
+  }
+
+  .button-1:disabled,
+  .button-1[disabled] {
+    cursor: not-allowed;
+    filter: grayscale(60%) brightness(85%);
+    opacity: 0.65;
+    border-color: rgba(128, 128, 128, 0.3);
+    box-shadow: none;
+    text-shadow: none;
+    background-image: linear-gradient(to bottom, var(--button-gradient-stop-1), var(--button-gradient-stop-2));
+    background-blend-mode: multiply;
+    background-size: 100% 100%;
+    transform: none;
+    transition: filter 0.2s ease-out, opacity 0.2s ease-out, border-color 0.2s ease-out;
+  }
+  .button-1:disabled:hover,
+  .button-1[disabled]:hover,
+  .button-1:disabled:active,
+  .button-1[disabled]:active {
+    filter: grayscale(60%) brightness(85%);
+  transform: none;
+  box-shadow: none;
+  border-color: rgba(128, 128, 128, 0.3);
+  }
+  .button-1:disabled::after,
+  .button-1[disabled]::after {
+    opacity: 0;
+  }
+  .button-1:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 0 3px rgba(255, 197, 39, 0.842),
+      inset 1px 1px 0px 0px rgba(255, 255, 255, var(--button-sharp-highlight-opacity)),
+      inset -1px -1px 0px 0px rgba(0, 0, 0, var(--button-sharp-shadow-opacity)),
+      inset 1px 1px 1px rgba(255, 255, 255, 0.1),
+      inset -1px -1px 1px rgba(0, 0, 0, 0.1);
+  }
+
+
+  .button-1:hover {
+    filter: brightness(1.1);
+  }
+
+  .button-1:hover::after {
+    background: radial-gradient(
+      circle,
+        rgb(255, 255, 240) 0%,
+        rgba(255, 255, 240, 0) 70%
+    );
+    opacity: 0.1;
+  }
+  .button-1:disabled:hover::after {
+    background: radial-gradient(
+      circle,
+        rgb(255, 255, 240) 0%,
+        rgba(255, 255, 240, 0) 70%
+    );
+    opacity: 0;
+  }
+
+  .button-1:active {
+    border-top: var(--button-bevel-width) solid var(--button-shadow-color);
+    border-left: var(--button-bevel-width) solid var(--button-shadow-color);
+    border-bottom: var(--button-bevel-width) solid var(--button-highlight-color);
+    border-right: var(--button-bevel-width) solid var(--button-highlight-color);
+    transform: translate(1px, 1px);
+    filter: brightness(0.9);
+    box-shadow:
+        inset 1px 1px 0px 0px rgba(0, 0, 0, 0.15),
+        inset -1px -1px 0px 0px rgba(255, 255, 255, 0.05),
+        inset -1px -1px 1px rgba(255, 255, 255, 0.1),
+        inset 1px 1px 1px rgba(0, 0, 0, 0.2);
+  }
+
+  .button-1:active::after {
+      opacity: 0;
+  }
+
+  .button-1::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.1s ease-out;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .button-1 span {
+    position: relative;
+    z-index: 2;
+  }
+  .content-panel {
+  box-sizing: border-box;
+  padding: var(--panel-padding);
+  border-radius: var(--panel-border-radius);
+  color: var(--panel-text-color);
+
+  border-top: var(--panel-bevel-width) solid var(--panel-shadow-color);
+  border-left: var(--panel-bevel-width) solid var(--panel-shadow-color);
+  border-bottom: var(--panel-bevel-width) solid var(--panel-highlight-color);
+  border-right: var(--panel-bevel-width) solid var(--panel-highlight-color);
+
+  background-color: var(--panel-bg-color);
+  background-image:
+    var(--noise-svg-panel),
+    var(--panel-gradient);
+  background-size: auto, 100% 100%;
+  background-blend-mode: overlay, normal;
+  background-position: 0 0;
+
+  box-shadow: inset 1px 1px 2px 0px var(--panel-inner-shadow-color);
+
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: var(--gap, 25px);
+}
+.content-panel h2 {
+  margin-top: 0;
+  color: #ffffff;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.4);
+  border-bottom: 1px solid var(--panel-shadow-color);
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.content-panel p {
+  line-height: 1.6;
+  margin-bottom: 1em;
+}
+
+.content-panel img {
+  max-width: 100%;
+  height: auto;
+  border-radius: calc(var(--panel-border-radius) - 2px);
+  display: block;
+  margin-bottom: 15px;
+}
+
+</style>
+</head>
+<body>
+  <div class="content-panel">
+    <h2>Image</h2>
+    <img src="https://picsum.photos//560/200/">
+  </div>
+  <div class="content-panel">
+    <h2>Buttons</h2>
+    <div class="button-holder"><button class="button-1"><span>Curseforge</span></button></div>
+    <div class="button-holder"><button class="button-1"><span>Github</span></button></div>
+    <div class="button-holder"><button class="button-1" disabled><span>WoW Interface</span></button></div>
+  </div>
+</body>
+</html>
